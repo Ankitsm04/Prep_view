@@ -47,7 +47,7 @@ interface InterviewCardProps {
   createdAt?: string;
 }
 
-interface AgentProps {
+interface  AgentProps {
   userName: string;
   userId?: string;
   interviewId?: string;

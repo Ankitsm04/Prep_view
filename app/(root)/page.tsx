@@ -4,7 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { dummyInterviews } from '@/constants'
 import InterviewCard from '@/components/InterviewCard'
-import { getCurrentUser, getInterviewByUserId, getLatestInterviews } from '@/lib/actions/auth.action'
+import { getCurrentUser } from '@/lib/actions/auth.action'
+import {getInterviewByUserId, getLatestInterviews } from '@/lib/actions/general.actions'
 
 const page = async () => {
   const user = await getCurrentUser();
@@ -35,7 +36,7 @@ const page = async () => {
         <div className='interviews-section'>
           { hasPastInterviews ? (
             userInterviews?.map((interview) => (
-              <InterviewCard {...interview} key={interview.id}/>
+              <InterviewCard {...interview} interviewId={interview.id} key={interview.id}/>
             ))
           ) : (  
             <p>Your have'nt given interviews yet</p>
@@ -48,7 +49,7 @@ const page = async () => {
         <div className='interviews-section'>
         { hasUpcommingInterviews ? (
             latestInterviews?.map((interview) => (
-              <InterviewCard {...interview} key={interview.id}/>
+              <InterviewCard {...interview} interviewId={interview.id} key={interview.id}/>
             ))
           ) : (  
             <p>There are no interviews avaliable</p>
