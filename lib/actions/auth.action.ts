@@ -2,6 +2,7 @@
 'use server'
 import { db, auth } from "@/firebase/admin";
 import { cookies } from "next/headers";
+import { redirect } from 'next/navigation';
 
 const ONE_WEEK = 60*60*24*7*1000;
 export async function signUp(params: SignUpParams) {
@@ -99,3 +100,23 @@ export async function isAuthenticated() {
     return !!user;
 }
 
+export async function signOut() {
+    const cookieStore = await cookies();
+    cookieStore.set('session', '', {
+        maxAge: 0,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        path: '/',
+        sameSite: 'lax'
+    });
+
+    return {
+        success: true,
+        message: 'Successfully logged out'
+    };
+}
+
+export async function logout() {
+    await signOut();
+    redirect('/sign-in');
+}
