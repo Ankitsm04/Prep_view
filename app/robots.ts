@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: ["/", "/sign-in", "/sign-up"],
         disallow: [
-          "/interview", // User dashboard - auth only
+          "/interview", // Protected user dashboard
           "/api/", // API routes
         ],
       },
