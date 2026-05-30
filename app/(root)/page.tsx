@@ -68,6 +68,7 @@ const page = async () => {
         </div>
       </section>
     </main>
+  );
 }
 
 export default page
