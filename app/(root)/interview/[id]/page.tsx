@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { getInterviewById } from '@/lib/actions/general.actions';
 import { getRandomInterviewCover } from '@/lib/utils';
 import Image from 'next/image';
@@ -7,19 +8,28 @@ import DisplayTechicons from '@/components/DisplayTechicons';
 import Agent from '@/components/Agent';
 import { getCurrentUser } from '@/lib/actions/auth.action';
 
+export const metadata: Metadata = {
+  title: "Interview Session | Prepview AI",
+  description: "Practice interview session with AI feedback.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 const page = async ({params} : RouteParams) => {
   const {id} = await params;
   const user = await getCurrentUser();
   const interview = await getInterviewById(id);
   if(!interview) redirect('/');
   return (
-    <>
+    <main>
       <div className="flex flex-row gap-4 justify-between">
         <div className="flex flex-row gap-4 items-center">
           <div className="flex flex-row gap-4 items-center">
-            <Image src={getRandomInterviewCover()} alt='coverimage' width={40} height={40}
+            <Image src={getRandomInterviewCover()} alt='interview cover' width={40} height={40}
             className='rounded-full object-cover size-[40px]'/>
-            <h3 className='capitalize'>{interview.role} Interview</h3> 
+            <h1 className='capitalize'>{interview.role} Interview</h1> 
           </div>
           <DisplayTechicons techStack={interview.techstack} />
         </div>
@@ -27,7 +37,7 @@ const page = async ({params} : RouteParams) => {
       </div>
       <Agent userName={user?.name!} userId={user?.id} interviewId={id} type='interview'
       questions={interview.questions}/>
-    </>
+    </main>
   )
 }
 

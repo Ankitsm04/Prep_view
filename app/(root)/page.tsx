@@ -1,4 +1,5 @@
 import React from 'react'
+import type { Metadata } from 'next'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -6,6 +7,16 @@ import { dummyInterviews } from '@/constants'
 import InterviewCard from '@/components/InterviewCard'
 import { getCurrentUser } from '@/lib/actions/auth.action'
 import {getInterviewById, getLatestInterviews } from '@/lib/actions/general.actions'
+
+export const metadata: Metadata = {
+  title: "AI-Powered Interview Preparation | Prepview AI",
+  description: "Master technical interviews with AI-powered interview prep. Practice with real interview questions and get instant feedback.",
+  openGraph: {
+    title: "AI-Powered Interview Preparation | Prepview AI",
+    description: "Master technical interviews with AI-powered interview prep. Practice with real interview questions and get instant feedback.",
+    type: "website",
+  },
+};
 
 const page = async () => {
   const user = await getCurrentUser();
@@ -16,10 +27,10 @@ const page = async () => {
   const hasPastInterviews = !!userInterviews && userInterviews.length > 0;
   const hasUpcommingInterviews = !!latestInterviews && latestInterviews?.length > 0;
   return (
-    <>
+    <main>
       <section className='card-cta'>
         <div className='flex flex-col gap-6 max-w-lg'>
-          <h2>Get Interview Ready with AI-Powered Interview Prep</h2>
+          <h1>Get Interview Ready with AI-Powered Interview Prep</h1>
           <p className='text-lg'>
               Practice on real Interview questions and get feedback from AI.
           </p>
@@ -28,7 +39,7 @@ const page = async () => {
           </Button>
         </div>
 
-        <Image src='/robot.png' alt="robo-dude" width={400} height={400} className='max-sm:hidden'/>
+        <Image src='/robot.png' alt="AI robot for interview preparation" width={400} height={400} className='max-sm:hidden'/>
 
       </section>
       <section className="flex flex-col gap-6 mt-8">
@@ -56,8 +67,7 @@ const page = async () => {
           )}
         </div>
       </section>
-    </>
-  )
+    </main>
 }
 
 export default page

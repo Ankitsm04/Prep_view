@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import dayjs from "dayjs";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,6 +10,15 @@ import {
 } from "@/lib/actions/general.actions";
 import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/lib/actions/auth.action";
+
+export const metadata: Metadata = {
+  title: "Interview Feedback | Prepview AI",
+  description: "View your interview feedback and performance analysis.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 const Feedback = async ({ params }: RouteParams) => {
   const { id } = await params;
@@ -23,31 +33,32 @@ const Feedback = async ({ params }: RouteParams) => {
   });
 
   return (
-    <section className="section-feedback">
-      <div className="flex flex-row justify-center">
-        <h1 className="text-4xl font-semibold">
-          Feedback on the Interview -{" "}
-          <span className="capitalize">{interview.role}</span> Interview
-        </h1>
-      </div>
+    <main>
+      <section className="section-feedback">
+        <div className="flex flex-row justify-center">
+          <h1 className="text-4xl font-semibold">
+            Feedback on the Interview -{" "}
+            <span className="capitalize">{interview.role}</span> Interview
+          </h1>
+        </div>
 
-      <div className="flex flex-row justify-center ">
-        <div className="flex flex-row gap-5">
-          {/* Overall Impression */}
-          <div className="flex flex-row gap-2 items-center">
-            <Image src="/star.svg" width={22} height={22} alt="star" />
-            <p>
-              Overall Impression:{" "}
-              <span className="text-primary-200 font-bold">
-                {feedback?.totalScore}
-              </span>
-              /100
-            </p>
-          </div>
+        <div className="flex flex-row justify-center ">
+          <div className="flex flex-row gap-5">
+            {/* Overall Impression */}
+            <div className="flex flex-row gap-2 items-center">
+              <Image src="/star.svg" width={22} height={22} alt="star icon" />
+              <p>
+                Overall Impression:{" "}
+                <span className="text-primary-200 font-bold">
+                  {feedback?.totalScore}
+                </span>
+                /100
+              </p>
+            </div>
 
-          {/* Date */}
-          <div className="flex flex-row gap-2">
-            <Image src="/calendar.svg" width={22} height={22} alt="calendar" />
+            {/* Date */}
+            <div className="flex flex-row gap-2">
+              <Image src="/calendar.svg" width={22} height={22} alt="calendar icon" />
             <p>
               {feedback?.createdAt
                 ? dayjs(feedback.createdAt).format("MMM D, YYYY h:mm A")
@@ -113,6 +124,7 @@ const Feedback = async ({ params }: RouteParams) => {
         </Button>
       </div>
     </section>
+    </main>
   );
 };
 
